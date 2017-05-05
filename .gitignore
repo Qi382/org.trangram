@@ -1,0 +1,23 @@
+# generated files
+*.class
+bin/
+lib/
+target/
+
+
+# IntelliJ IDEA files
+.idea
+.iws
+*.iml
+*.ipr
+
+# Eclipse files
+.settings
+.classpath
+.project
+.externalToolBuilders
+
+# private
+db.properties
+nrzx.properties
+

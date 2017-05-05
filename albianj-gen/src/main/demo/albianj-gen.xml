@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="db" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="file:nrzx.properties"/>
+    </bean>
+    <import resource="classpath:albianj-core.xml"/>
+
+	<bean id="modelTask" class="org.trangram.task.JavaBeanTask" p:typeRender-ref="typeRender"
+          p:template="model.interface.beetl" p:targetDir="model" p:targetPackage="model" p:prefix="I" p:suffix=".java"/>	
+     <bean id="modelImlTask" class="org.trangram.task.JavaBeanTask" p:typeRender-ref="typeRender"
+          p:template="model.impl.beetl" p:targetDir="model\iml" p:targetPackage="model.iml" p:suffix=".java"/>
+
+    <bean id="groupTask" class="java.util.ArrayList">
+        <constructor-arg index="0">
+            <list>
+                <ref bean="modelTask"/>
+                <ref bean="modelImlTask"/>
+            </list>
+        </constructor-arg>
+    </bean>
+	
+    <import resource="file:schema.*.xml"/>
+
+    <bean id="nrzx" class="org.trangram.config.TrangramContext">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="columnFactory" ref="columnFactory"/>
+        <property name="tableFactory" ref="tableFactory"/>
+        <property name="destination" value="."/>
+        <property name="targetPackage" value="com.yuewen.nrzx"/>
+        <property name="schemas">
+            <list>
+                <ref bean="ccBookDB"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>

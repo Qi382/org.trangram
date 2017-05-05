@@ -1,0 +1,24 @@
+package ${table.ext.package};
+
+
+/**
+ * ${table.comment!}
+ * project : ${ctx.project}
+ */
+public interface I${table.domainObjectName} extends org.albianj.persistence.object.IAlbianObject {
+
+<%for(column in table.columns){%>
+    /**
+     * ${column.comment} <%if(column.identity){print("PRIMARY");}%> <br/>
+     * 是否可已为空 ${column.nullable!}  <%if(isNotEmpty(column.defaultValue)){%> 默认值 ${column.defaultValue!} <%}%>
+     */
+    ${column.javaType} get${column.javaMethod}();
+
+    /**
+     * ${column.comment} <%if(column.identity){print("PRIMARY");}%> <br/>
+     * 是否可已为空 ${column.nullable!}  <%if(isNotEmpty(column.defaultValue)){%> 默认值 ${column.defaultValue!} <%}%>
+     */
+    void set${column.javaMethod}(${column.javaType} value);
+
+<% }%>
+}
